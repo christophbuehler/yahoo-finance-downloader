@@ -28,83 +28,87 @@ class ConfigSchema(BaseModel):
     RaiseErrors: bool
 
 
-print(
-    colored(
-        f"🚀 Launched Yahoo Finance Downloader.",
-        "blue",
-    )
-)
-
-
-with open(config_file, "r") as file:
-    content = yaml.safe_load(file)
-    config = ConfigSchema(**content)
-
+try:
     print(
         colored(
-            f"✅ Your {config_file} is valid. Downloading data for {len(config.Symbols)} symbols from {config.DateFrom} to {config.DateUntil}.",
-            "green",
+            f"🚀 Launched Yahoo Finance Downloader.",
+            "blue",
         )
     )
 
-    print(".")
+    with open(config_file, "r") as file:
+        content = yaml.safe_load(file)
+        config = ConfigSchema(**content)
 
-    for index, symbol in enumerate(config.Symbols):
         print(
-            "├── " + f"[{index + 1}/{len(config.Symbols)}] Fetching data for: {symbol}"
+            colored(
+                f"✅ Your {config_file} is valid. Downloading data for {len(config.Symbols)} symbols from {config.DateFrom} to {config.DateUntil}.",
+                "green",
+            )
         )
 
-        ticker = yf.Ticker(symbol)
-        metadata = {
-            "Symbol": symbol,
-            "DateFrom": config.DateFrom,
-            "DateUntil": config.DateUntil,
-        }
+        print(".")
 
-        output_file = config.Output.format(**metadata)
-        history = ticker.history(
-            start=config.DateFrom,
-            end=config.DateUntil,
-            interval=config.Interval,
-            prepost=config.Prepost,
-            actions=config.Actions,
-            auto_adjust=config.AutoAdjust,
-            back_adjust=config.BackAdjust,
-            repair=config.Repair,
-            keepna=config.Keepna,
-            rounding=config.Rounding,
-            timeout=config.Timeout,
-            raise_errors=config.RaiseErrors,
-        )
+        for index, symbol in enumerate(config.Symbols):
+            print(
+                "├── "
+                + f"[{index + 1}/{len(config.Symbols)}] Fetching data for: {symbol}"
+            )
 
-        output_fns = {
-            "csv": lambda: history.to_csv(
-                output_file, decimal=config.DecimalSeparator, columns=config.Columns
-            ),
-            "json": lambda: history.to_json(
-                output_file, decimal=config.DecimalSeparator, columns=config.Columns
-            ),
-            "xls": lambda: history.to_excel(
-                output_file, decimal=config.DecimalSeparator, columns=config.Columns
-            ),
-            "xlsx": lambda: history.to_excel(
-                output_file, decimal=config.DecimalSeparator, columns=config.Columns
-            ),
-        }
+            ticker = yf.Ticker(symbol)
+            metadata = {
+                "Symbol": symbol,
+                "DateFrom": config.DateFrom,
+                "DateUntil": config.DateUntil,
+            }
 
-        extension = os.path.splitext(output_file)[1][1:]
+            output_file = config.Output.format(**metadata)
+            history = ticker.history(
+                start=config.DateFrom,
+                end=config.DateUntil,
+                interval=config.Interval,
+                prepost=config.Prepost,
+                actions=config.Actions,
+                auto_adjust=config.AutoAdjust,
+                back_adjust=config.BackAdjust,
+                repair=config.Repair,
+                keepna=config.Keepna,
+                rounding=config.Rounding,
+                timeout=config.Timeout,
+                raise_errors=config.RaiseErrors,
+            )
 
-        dir_name = os.path.dirname(output_file)
-        if not os.path.exists(dir_name):
-            os.makedirs(dir_name)
-            print("│   ├── " + f"📁 Created directory: {dir_name}")
+            output_fns = {
+                "csv": lambda: history.to_csv(
+                    output_file, decimal=config.DecimalSeparator, columns=config.Columns
+                ),
+                "json": lambda: history.to_json(
+                    output_file, decimal=config.DecimalSeparator, columns=config.Columns
+                ),
+                "xls": lambda: history.to_excel(
+                    output_file, decimal=config.DecimalSeparator, columns=config.Columns
+                ),
+                "xlsx": lambda: history.to_excel(
+                    output_file, decimal=config.DecimalSeparator, columns=config.Columns
+                ),
+            }
 
-        output_fns[extension]()
-        print(
-            ("    └── " if (index == len(config.Symbols) - 1) else "│   └── ")
-            + colored(f"✅ Saved data to: {output_file}", "green")
-        )
+            extension = os.path.splitext(output_file)[1][1:]
 
-    print(colored("🎉 All done!", "magenta"))
+            dir_name = os.path.dirname(output_file)
+            if not os.path.exists(dir_name):
+                os.makedirs(dir_name)
+                print("│   ├── " + f"📁 Created directory: {dir_name}")
 
-    input("Press Enter to close...")
+            output_fns[extension]()
+            print(
+                ("    └── " if (index == len(config.Symbols) - 1) else "│   └── ")
+                + colored(f"✅ Saved data to: {output_file}", "green")
+            )
+
+        print(colored("🎉 All done!", "magenta"))
+
+        input("Press Enter to close...")
+
+except Exception as e:
+    print(f"Error: {e}")
