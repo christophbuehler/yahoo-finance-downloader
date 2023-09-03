@@ -1,7 +1,2 @@
-echo Running download.py
-
-pause
-
-:: Run the Python script
+@echo off
 python download.py
-pause
