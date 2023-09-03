@@ -106,3 +106,5 @@ with open(config_file, "r") as file:
         )
 
     print(colored("🎉 All done!", "magenta"))
+
+    input("Press Enter to close...")
