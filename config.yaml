@@ -1,0 +1,67 @@
+# Specifies the start date for the market data range you want to retrieve.
+DateFrom: "2022-04-30"
+
+# Specifies the end date for the market data range you want to retrieve.
+DateUntil: "2023-08-13"
+
+# Defines the interval for the data. "1d" means daily data.
+Interval: "1d"
+
+# Lists the columns you want to retrieve for the market data.
+Columns:
+  - Open
+  - High
+  - Low
+  - Close
+  - Volume
+
+# Specifies the format for the output file name. The placeholders will be replaced
+# by actual values. For example, {Symbol} will be replaced by the actual symbol like ^DJI.
+# The supported extensions are csv, json and xlsx
+Output: "out/{Symbol}-{DateFrom}-{DateUntil}.csv"
+
+# Specifies the character used to separate decimals in the output.
+DecimalSeparator: ","
+
+# Lists the symbols of the stocks or indices you want to download data for.
+Symbols:
+  - ^DJI
+  - ^GSPC
+  - ^IXIC
+  - ^RUT
+  - ^STOXX50E
+  - ^TNX
+  - AAXJ
+  - ACWI
+
+# Determines whether to include pre-market and post-market data.
+# If set to False, only regular trading hours data will be included.
+Prepost: False
+
+# Specifies whether to include stock splits, dividends, and dividend pay dates in the data.
+Actions: False
+
+# Determines if data should be auto-adjusted for splits & dividends.
+# If set to False, the data will not be adjusted.
+AutoAdjust: False
+
+# If set to True, it would back-adjust all history automatically on dividends, splits, etc.
+BackAdjust: False
+
+# If there's an error in the data, setting this to True would repair it.
+# For example, filling missing data points.
+Repair: False
+
+# Determines if NaN (Not a Number) values should be kept in the dataset.
+Keepna: False
+
+# Specifies whether the data should be rounded to a set number of decimal places.
+Rounding: False
+
+# The maximum time (in seconds) to wait for a server response.
+# If the server doesn't respond within this time, the request will be terminated.
+Timeout: 10
+
+# If set to True, the tool will raise exceptions for any errors encountered.
+# If False, it will silently skip or ignore the errors.
+RaiseErrors: False
