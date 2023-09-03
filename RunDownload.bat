@@ -7,5 +7,9 @@ if %errorlevel% NEQ 0 (
     exit /b
 )
 
+pause
+
 :: Run your Python script
 python download.py
+
+pause
