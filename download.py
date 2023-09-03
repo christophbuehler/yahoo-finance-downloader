@@ -108,7 +108,8 @@ try:
 
         print(colored("🎉 All done!", "magenta"))
 
-        input("Press Enter to close...")
-
 except Exception as e:
     print(f"Error: {e}")
+
+
+input("Press Enter to close...")
