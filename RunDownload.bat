@@ -6,6 +6,7 @@ if %errorlevel% NEQ 0 (
     powershell -Command "Start-Process cmd -ArgumentList '/c cd %~dp0 && %0' -Verb RunAs"
     exit /b
 )
+pause
 
 :: Run your Python script
 python download.py
