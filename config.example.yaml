@@ -18,7 +18,7 @@ Columns:
 # Specifies the format for the output file name. The placeholders will be replaced
 # by actual values. For example, {Symbol} will be replaced by the actual symbol like ^DJI.
 # The supported extensions are csv, json and xlsx
-Output: "out\\{Symbol}-{DateFrom}-{DateUntil}.csv"
+Output: "out/{Symbol}-{DateFrom}-{DateUntil}.csv"
 
 # Specifies the character used to separate decimals in the output.
 DecimalSeparator: ","
