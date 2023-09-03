@@ -1,4 +1,7 @@
 @echo off
+
+pause
+
 :: Check for admin rights
 net session >nul 2>&1
 if %errorlevel% NEQ 0 (
