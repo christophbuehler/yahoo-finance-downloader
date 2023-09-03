@@ -5,6 +5,10 @@ import yaml
 import os
 from tqdm import tqdm
 from termcolor import colored
+import sys
+import io
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf8")
 
 config_file = "config.yaml"
 
